@@ -131,7 +131,7 @@
             box-sizing: border-box; 
         }
         
-        /* Grid de Catálogo */
+        /* Grid de Catálogo (PC por defecto) */
         .grid-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
         
         .producto-tarjeta { 
@@ -178,7 +178,7 @@
         .btn-detalles { background: #2d2d2d; color: var(--text-light); }
         .btn-detalles:hover { background: #3d3d3d; }
 
-        /* Carrito Lateral */
+        /* Carrito Lateral (PC por defecto) */
         .seccion-carrito { 
             position: fixed;
             top: 0;
@@ -219,7 +219,7 @@
         .btn-eliminar-item:hover { color: #ff6666; transform: scale(1.1); }
         
         /* Formulario de Datos */
-        .formulario-datos { margin-top: 10px; padding-top: 10px; border-top: 2px dashed #2d2d2d; }
+        .formulario-datos { margin-top: 10px; padding-top: 10px; border-top: 2px dashed #2d2d2d; margin-bottom: 10px; }
         .formulario-datos h4 { margin: 0 0 4px 0; color: var(--yellow); font-size: 13px; }
         .aviso-form-scz { font-size: 11px; color: #ffaa00; font-weight: bold; margin-bottom: 8px; display: block; }
         .input-datos { width: 100%; padding: 8px 10px; background: #222222; border: 1px solid #444444; border-radius: 4px; color: white; margin-bottom: 8px; box-sizing: border-box; font-size: 12px; }
@@ -228,6 +228,9 @@
         .carrito-total { font-size: 18px; font-weight: bold; margin: 12px 0; display: flex; justify-content: space-between; color: var(--text-light); }
         .btn-whatsapp { background: var(--success); color: white; width: 100%; padding: 12px; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-sizing: border-box; text-align: center; border-radius: 5px; cursor: pointer;}
         .btn-whatsapp:hover { background: #20ba5a; }
+
+        /* Contenedor inferior para agrupar total y botón en el carro */
+        .carrito-pie { background: var(--bg-card); width: 100%; }
 
         /* Botones Flotantes */
         .floating-btn { position: fixed; bottom: 20px; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.6); z-index: 2000; text-decoration: none; font-size: 24px; border: none; cursor: pointer; transition: transform 0.2s; }
@@ -253,9 +256,87 @@
         .modal-detalles-tecnicos p { margin: 6px 0; }
 
         .mensaje { grid-column: 1 / -1; text-align: center; font-size: 16px; color: var(--text-muted); padding: 40px; }
+
+        /* ==========================================================================
+           ⚡ SECCIÓN REGLAS EXCLUSIVAS PARA CELULARES (MÁXIMO 768px DE ANCHO) ⚡
+           ========================================================================== */
+        @media (max-width: 768px) {
+            /* 1. Forzar catálogo a exactamente 3 columnas compactas */
+            .grid-productos {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
+
+            /* Reducción general de elementos internos de la tarjeta para celular */
+            .producto-tarjeta {
+                padding: 6px !important;
+                border-radius: 4px !important;
+            }
+            .producto-imagen {
+                height: 85px !important;
+                margin-bottom: 4px !important;
+            }
+            .marca-tag {
+                font-size: 9px !important;
+                padding: 2px 6px !important;
+                margin-bottom: 4px !important;
+            }
+            .producto-tarjeta h3 {
+                font-size: 11px !important;
+                margin: 4px 0 2px 0 !important;
+                line-height: 1.2;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                min-height: 26px;
+            }
+            .desc-corta {
+                display: none !important; /* Ocultamos descripción corta en celular para ganar espacio */
+            }
+            .precio {
+                font-size: 14px !important;
+                margin: 4px 0 !important;
+            }
+            .btn {
+                padding: 6px 4px !important;
+                font-size: 10px !important;
+                border-radius: 3px !important;
+            }
+            .botones-tarjeta {
+                gap: 4px !important;
+            }
+
+            /* 2. Carrito optimizado en celular con BOTÓN TOTALMENTE FIJO ABAJO */
+            .seccion-carrito {
+                width: 100% !important;
+                right: -100% ;
+                padding: 15px !important;
+            }
+            .lista-carrito {
+                margin-bottom: 10px !important;
+            }
+            
+            /* Clavamos la sección de confirmación abajo de todo */
+            .carrito-pie {
+                position: sticky !important;
+                bottom: 0 !important;
+                background: var(--bg-card) !important;
+                padding-top: 10px !important;
+                border-top: 1px solid #333 !important;
+                z-index: 10;
+            }
+            .carrito-total {
+                margin: 5px 0 10px 0 !important;
+                font-size: 16px !important;
+            }
+            .btn-whatsapp {
+                padding: 14px !important;
+                font-size: 14px !important;
+            }
+        }
     </style>
 
-    <!-- SCRIPT FILTRO DE GEOLOCALIZACIÓN (SÓLO AMÉRICA LATINA / AMÉRICAS) -->
     <script>
         async function comprobarGeografia() {
             try {
@@ -282,14 +363,12 @@
 </head>
 <body>
 
-    <!-- 1. PANTALLA DE RESTRICCIÓN GEOGRÁFICA -->
     <div id="pantalla-bloqueo">
         <h2>🚫 Acceso Restringido</h2>
         <p>Lo sentimos, este catálogo de productos no se encuentra disponible para su ubicación geográfica actual.</p>
         <p><b>JoG-Tech Lubricantes</b> opera de manera exclusiva dentro de los límites del mercado de América Latina.</p>
     </div>
 
-    <!-- 2. CONTENIDO COMPLETO DE LA PÁGINA WEB -->
     <div id="contenido-pagina">
 
         <header>
@@ -298,7 +377,7 @@
         </header>
 
         <div class="contenedor-buscador">
-            <input type="text" id="buscador" class="input-buscador" oninput="filtrarProductos()" placeholder="🔍 Escribe para buscar por nombre, marca o viscosidad...">
+            <input type="text" id="buscador" class="input-buscador" oninput="filtrarProductos()" placeholder="🔍 Buscar por nombre, marca o viscosidad...">
         </div>
 
         <div class="contenedor-filtros">
@@ -338,13 +417,15 @@
                 <input type="text" id="pedido-direccion" class="input-datos" placeholder="Dirección exacta (Barrio, Calle, Nro) *">
             </div>
 
-            <div class="carrito-total">
-                <span>Total:</span>
-                <span id="total-precio" style="color: var(--yellow);">Bs. 0.00</span>
+            <div class="carrito-pie">
+                <div class="carrito-total">
+                    <span>Total:</span>
+                    <span id="total-precio" style="color: var(--yellow);">Bs. 0.00</span>
+                </div>
+                <button class="btn btn-whatsapp" onclick="enviarCotizacionWhatsApp()">
+                    💬 Confirmar Pedido por WhatsApp
+                </button>
             </div>
-            <button class="btn btn-whatsapp" onclick="enviarCotizacionWhatsApp()">
-                💬 Confirmar Pedido por WhatsApp
-            </button>
         </aside>
 
         <button onclick="toggleCarrito()" class="floating-btn btn-carrito-float" title="Ver Carrito">
@@ -376,17 +457,14 @@
     </div>
 
 <script>
-// 1. ENLACE APPS SCRIPT DE TU EXCEL GOOGLE SHEETS
 const URL_PUENTE = "https://script.google.com/macros/s/AKfycbxgjYq3b39bCDgN7uadM8TPviQ2jqlCWezD6egtzCBcLpska4NjtAGryFlbwzeN_hlq/exec";
 
-// 2. CONFIGURACIÓN DEL TELÉFONO DESTINO DE WHATSAPP (OFUSCADO)
 const _P_DATA = "00000007195"; 
 const obtenerTelefonoSeguro = () => _P_DATA.split("").reverse().join("");
 
 let productosBD = []; 
 let carrito = [];     
 
-// 3. SANITIZACIÓN DE CAMPOS CONTRA INYECCIONES DE CÓDIGO
 function escaparHTML(cadena) {
     if (cadena === null || cadena === undefined) return "";
     return cadena.toString()
@@ -397,7 +475,6 @@ function escaparHTML(cadena) {
         .replace(/'/g, "&#039;");
 }
 
-// 4. CARGA ASÍNCRONA DE DATOS DESDE EL EXCEL
 async function cargarProductos() {
     const contenedor = document.getElementById("contenedor-productos");
     try {
@@ -452,7 +529,7 @@ function configurarOpcionesSelect(idSelect, listaValores, textoDefecto) {
 function filtrarProductos() {
     const textoBuscado = document.getElementById("buscador").value.toLowerCase().trim();
     const marcaSeleccionada = document.getElementById("filtro-marca").value;
-    const tipoSeleccionado = document.getElementById("filtro-tipo").value;
+    const tipoSeleccionada = document.getElementById("filtro-tipo").value;
     const viscosidadSeleccionada = document.getElementById("filtro-viscosidad").value;
     
     const productosFiltrados = productosBD.filter(prod => {
@@ -466,7 +543,7 @@ function filtrarProductos() {
                               viscosidad.includes(textoBuscado);
                               
         const coincideMarca = marcaSeleccionada === "" || prod.marca === marcaSeleccionada;
-        const coincideTipo = tipoSeleccionado === "" || prod.tipo === tipoSeleccionado;
+        const coincideTipo = tipoSeleccionada === "" || prod.tipo === tipoSeleccionada;
         const coincideViscosidad = viscosidadSeleccionada === "" || prod.viscosidad === viscosidadSeleccionada;
         
         return coincideTexto && coincideMarca && coincideTipo && coincideViscosidad;
@@ -475,13 +552,12 @@ function filtrarProductos() {
     renderizarCatalogo(productosFiltrados);
 }
 
-// 5. RENDERIZACIÓN DEL CATÁLOGO
 function renderizarCatalogo(listaAFiltrar) {
     const contenedor = document.getElementById("contenedor-productos");
     contenedor.innerHTML = "";
     
     if (listaAFiltrar.length === 0) {
-        contenedor.innerHTML = "<p class='mensaje'>❌ No se encontraron resultados con los criterios seleccionados.</p>";
+        contenedor.innerHTML = "<p class='mensaje'>❌ Sin resultados.</p>";
         return;
     }
     
@@ -499,8 +575,8 @@ function renderizarCatalogo(listaAFiltrar) {
                 <div>
                     <p class="precio">Bs. ${prod.precio.toFixed(2)}</p>
                     <div class="botones-tarjeta">
-                        <button class="btn btn-agregar" onclick="agregarAlCarrito(${prod.id})">Añadir al carro</button>
-                        <button class="btn btn-detalles" onclick="verCaracteristicas(${prod.id})">Ver Características</button>
+                        <button class="btn btn-agregar" onclick="agregarAlCarrito(${prod.id})">Añadir</button>
+                        <button class="btn btn-detalles" onclick="verCaracteristicas(${prod.id})">Detalles</button>
                     </div>
                 </div>
             </div>
@@ -525,13 +601,12 @@ function toggleCarrito() {
     document.getElementById("carrito-lateral").classList.toggle("abierto");
 }
 
-// 6. CONTROL Y OPERACIÓN DEL CARRITO DE COMPRAS
 function agregarAlCarrito(id) {
     const idSeguro = Number(id);
     const productoOriginal = productosBD.find(p => p.id === idSeguro);
     
     if (!productoOriginal) {
-        lanzarAvisoTemporal("⚠️ Error de integridad del producto.");
+        lanzarAvisoTemporal("⚠️ Error de producto.");
         return;
     }
 
@@ -569,7 +644,7 @@ function cambiarCantidad(id, cambio) {
 function eliminarDelCarrito(id) {
     const idSeguro = Number(id);
     carrito = carrito.filter(p => p.id !== idSeguro);
-    lanzarAvisoTemporal("❌ Producto removido.");
+    lanzarAvisoTemporal("❌ Removido.");
     actualizarCarritoUI();
 }
 
@@ -616,7 +691,6 @@ function actualizarCarritoUI() {
     badge.style.display = "flex";
 }
 
-// 7. CONTROL DEL MODAL DE DETALLES TÉCNICOS
 function verCaracteristicas(id) {
     const idSeguro = Number(id);
     const prod = productosBD.find(p => p.id === idSeguro);
@@ -643,11 +717,9 @@ function cerrarModal() {
     document.getElementById("modal-detalles").style.display = "none";
 }
 
-// 8. CONSTRUCCIÓN DEL MENSAJE Y REDIRECCIÓN A WHATSAPP
 function enviarCotizacionWhatsApp() {
     const telefonoDestino = obtenerTelefonoSeguro();
 
-    // --- CASO A: SI EL CARRITO ESTÁ TOTALMENTE VACÍO (CONSULTA GENERAL) ---
     if (carrito.length === 0) {
         let mensajeGeneral = `*👋 ¡Hola JoG-Tech Lubricantes!*%0A`;
         mensajeGeneral += `Me comunico desde la página web. Quisiera realizar una consulta sobre sus aceites y disponibilidad para entrega en Santa Cruz.`;
@@ -657,7 +729,6 @@ function enviarCotizacionWhatsApp() {
         return; 
     }
     
-    // --- CASO B: SI EL CARRITO TIENE ARTÍCULOS (PROCESO DE PEDIDO ESTRUCTURADO) ---
     const nombreCliente = document.getElementById("pedido-nombre").value.replace(/[^\w\sñÑáéíóúÁÉÍÓÚ]/gi, "").trim();
     const direccionCliente = document.getElementById("pedido-direccion").value.replace(/[^\w\sñÑáéíóúÁÉÍÓÚ.,#-]/gi, "").trim();
     
@@ -693,7 +764,6 @@ function enviarCotizacionWhatsApp() {
     window.open(urlWhatsApp, '_blank');
 }
 
-// Inicialización
 document.addEventListener("DOMContentLoaded", cargarProductos);
 </script>
 </body>
