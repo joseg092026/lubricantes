@@ -131,7 +131,7 @@
             box-sizing: border-box; 
         }
         
-        /* Grid de Catálogo (PC por defecto) */
+        /* Grid de Catálogo */
         .grid-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
         
         .producto-tarjeta { 
@@ -178,7 +178,7 @@
         .btn-detalles { background: #2d2d2d; color: var(--text-light); }
         .btn-detalles:hover { background: #3d3d3d; }
 
-        /* Carrito Lateral (PC por defecto) */
+        /* Carrito Lateral */
         .seccion-carrito { 
             position: fixed;
             top: 0;
@@ -201,6 +201,13 @@
         .btn-cerrar-carrito { background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
         .btn-cerrar-carrito:hover { color: var(--danger); }
 
+        /* Formulario de Datos Arriba */
+        .formulario-datos { padding-bottom: 12px; border-bottom: 2px dashed #2d2d2d; margin-bottom: 12px; }
+        .formulario-datos h4 { margin: 0 0 4px 0; color: var(--yellow); font-size: 13px; }
+        .aviso-form-scz { font-size: 11px; color: #ffaa00; font-weight: bold; margin-bottom: 8px; display: block; }
+        .input-datos { width: 100%; padding: 8px 10px; background: #222222; border: 1px solid #444444; border-radius: 4px; color: white; margin-bottom: 8px; box-sizing: border-box; font-size: 12px; }
+        .input-datos:focus { border-color: var(--yellow); outline: none; }
+
         .lista-carrito { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; }
         .item-carrito { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #2d2d2d; font-size: 14px; gap: 5px; }
         .item-controles { display: flex; align-items: center; gap: 5px; }
@@ -218,18 +225,10 @@
         .btn-eliminar-item { background: none; border: none; color: var(--danger); font-size: 18px; font-weight: bold; cursor: pointer; padding: 0 5px; margin-left: 5px; }
         .btn-eliminar-item:hover { color: #ff6666; transform: scale(1.1); }
         
-        /* Formulario de Datos */
-        .formulario-datos { margin-top: 10px; padding-top: 10px; border-top: 2px dashed #2d2d2d; margin-bottom: 10px; }
-        .formulario-datos h4 { margin: 0 0 4px 0; color: var(--yellow); font-size: 13px; }
-        .aviso-form-scz { font-size: 11px; color: #ffaa00; font-weight: bold; margin-bottom: 8px; display: block; }
-        .input-datos { width: 100%; padding: 8px 10px; background: #222222; border: 1px solid #444444; border-radius: 4px; color: white; margin-bottom: 8px; box-sizing: border-box; font-size: 12px; }
-        .input-datos:focus { border-color: var(--yellow); outline: none; }
-
         .carrito-total { font-size: 18px; font-weight: bold; margin: 12px 0; display: flex; justify-content: space-between; color: var(--text-light); }
         .btn-whatsapp { background: var(--success); color: white; width: 100%; padding: 12px; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-sizing: border-box; text-align: center; border-radius: 5px; cursor: pointer;}
         .btn-whatsapp:hover { background: #20ba5a; }
 
-        /* Contenedor inferior para agrupar total y botón en el carro */
         .carrito-pie { background: var(--bg-card); width: 100%; }
 
         /* Botones Flotantes */
@@ -257,17 +256,12 @@
 
         .mensaje { grid-column: 1 / -1; text-align: center; font-size: 16px; color: var(--text-muted); padding: 40px; }
 
-        /* ==========================================================================
-           ⚡ SECCIÓN REGLAS EXCLUSIVAS PARA CELULARES (MÁXIMO 768px DE ANCHO) ⚡
-           ========================================================================== */
+        /* Estilos móviles */
         @media (max-width: 768px) {
-            /* 1. Forzar catálogo a exactamente 3 columnas compactas */
             .grid-productos {
                 grid-template-columns: repeat(3, 1fr) !important;
                 gap: 8px !important;
             }
-
-            /* Reducción general de elementos internos de la tarjeta para celular */
             .producto-tarjeta {
                 padding: 6px !important;
                 border-radius: 4px !important;
@@ -292,7 +286,7 @@
                 min-height: 26px;
             }
             .desc-corta {
-                display: none !important; /* Ocultamos descripción corta en celular para ganar espacio */
+                display: none !important;
             }
             .precio {
                 font-size: 14px !important;
@@ -307,17 +301,14 @@
                 gap: 4px !important;
             }
 
-            /* 2. Carrito optimizado en celular con BOTÓN TOTALMENTE FIJO ABAJO */
             .seccion-carrito {
                 width: 100% !important;
-                right: -100% ;
+                right: -100%;
                 padding: 15px !important;
             }
             .lista-carrito {
                 margin-bottom: 10px !important;
             }
-            
-            /* Clavamos la sección de confirmación abajo de todo */
             .carrito-pie {
                 position: sticky !important;
                 bottom: 0 !important;
@@ -337,12 +328,12 @@
         }
     </style>
 
+    <!-- SCRIPT FILTRO DE GEOLOCALIZACIÓN -->
     <script>
         async function comprobarGeografia() {
             try {
                 const respuesta = await fetch('https://ip-api.com/json/?fields=status,continent');
                 const datos = await respuesta.json();
-                
                 if (datos.status === 'success') {
                     if (datos.continent !== 'Americas' && datos.continent !== 'North America' && datos.continent !== 'South America') {
                         activarBloqueoPantalla();
@@ -352,12 +343,10 @@
                 console.log("No se pudo comprobar la IP remota. Acceso permitido por defecto.");
             }
         }
-
         function activarBloqueoPantalla() {
             document.getElementById('contenido-pagina').style.display = 'none';
             document.getElementById('pantalla-bloqueo').style.display = 'block';
         }
-
         document.addEventListener("DOMContentLoaded", comprobarGeografia);
     </script>
 </head>
@@ -400,23 +389,26 @@
             </main>
         </div>
 
+        <!-- RESTRUCTURACIÓN DEL CARRITO LATERAL -->
         <aside id="carrito-lateral" class="seccion-carrito">
             <div class="cabecera-carrito">
                 <h2>🛒 Tu Pedido</h2>
                 <button class="btn-cerrar-carrito" onclick="toggleCarrito()">&times;</button>
             </div>
             
-            <ul id="lista-carrito" class="lista-carrito">
-                <p style="color: #777; font-size: 14px; text-align: center; padding: 20px 0;">El carrito está vacío</p>
-            </ul>
-            
+            <!-- FORMULARIO MOVIDO ARRIBA (Para que sea lo primero que se ve) -->
             <div class="formulario-datos">
                 <h4>📝 Datos para el Pedido:</h4>
                 <span class="aviso-form-scz">⚠️ Entregas sólo en Santa Cruz de la Sierra</span>
                 <input type="text" id="pedido-nombre" class="input-datos" placeholder="Nombre completo del cliente / Taller *">
                 <input type="text" id="pedido-direccion" class="input-datos" placeholder="Dirección exacta (Barrio, Calle, Nro) *">
             </div>
-
+            
+            <!-- LISTA DE ARTÍCULOS ABAJO DEL FORMULARIO -->
+            <ul id="lista-carrito" class="lista-carrito">
+                <p style="color: #777; font-size: 14px; text-align: center; padding: 20px 0;">El carrito está vacío</p>
+            </ul>
+            
             <div class="carrito-pie">
                 <div class="carrito-total">
                     <span>Total:</span>
